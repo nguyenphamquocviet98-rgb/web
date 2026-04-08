@@ -189,27 +189,29 @@ def init_session_state():
 
 init_session_state()
 
-
 # =========================================================
 # 5. KHỞI TẠO GOOGLE EARTH ENGINE (BẢN CHUẨN ĐỂ UP WEB)
 # =========================================================
 def init_gee():
     try:
-        # Kiểm tra xem có thông tin cấu hình Secrets trên Streamlit Cloud hay không
         if "GEE_EMAIL" in st.secrets and "GEE_KEY" in st.secrets:
-            # Sử dụng Service Account để xác thực tự động trên Server
             credentials = ee.ServiceAccountCredentials(
                 st.secrets["GEE_EMAIL"],
                 st.secrets["GEE_KEY"]
             )
             ee.Initialize(credentials, project=CONFIG["project_id"])
         else:
-            # Nếu chạy local ở máy tính cá nhân (dùng trình duyệt xác thực)
             ee.Initialize(project=CONFIG["project_id"])
     except Exception as e:
         st.error(f"❌ Lỗi khởi tạo GEE: {e}")
         st.stop()
+
+# 👇👇👇 THÊM ĐÚNG 1 DÒNG NÀY VÀO ĐÂY (SÁT LỀ TRÁI) 👇👇👇
 init_gee()
+
+# =========================================================
+# 6. GEE CORE FUNCTIONS (ĐƯỢC TỐI ƯU CACHE & TILESCALE)
+# =========================================================
 # =========================================================
 # 6. GEE CORE FUNCTIONS (ĐƯỢC TỐI ƯU CACHE & TILESCALE)
 # =========================================================
