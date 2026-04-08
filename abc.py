@@ -209,7 +209,7 @@ def init_gee():
     except Exception as e:
         st.error(f"❌ Lỗi khởi tạo GEE: {e}")
         st.stop()
-
+init_gee()
 # =========================================================
 # 6. GEE CORE FUNCTIONS (ĐƯỢC TỐI ƯU CACHE & TILESCALE)
 # =========================================================
