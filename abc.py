@@ -231,8 +231,14 @@ def mask_l8(img):
 
 @st.cache_data(ttl=86400)
 def get_countries():
-    try: return sorted(ee.FeatureCollection(CONFIG["admin_l1"]).aggregate_array("ADM0_NAME").distinct().sort().getInfo() or [])
-    except: return []
+    try: 
+        # Thử lấy từ GEE
+        countries = ee.FeatureCollection(CONFIG["admin_l1"]).aggregate_array("ADM0_NAME").distinct().sort().getInfo()
+        if not countries: return ["Viet Nam"] # Nếu GEE trả về rỗng, dùng mặc định
+        return sorted(countries)
+    except Exception as e:
+        # Nếu lỗi kết nối, vẫn trả về Viet Nam để người dùng chọn được
+        return ["Viet Nam"]
 
 @st.cache_data(ttl=86400)
 def get_provinces(country_name):
