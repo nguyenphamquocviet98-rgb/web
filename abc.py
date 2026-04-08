@@ -28,7 +28,7 @@ st.set_page_config(
 # 2. CẤU HÌNH CHUNG & MAPPING 34 TỈNH THÀNH (TỐI ƯU 2025-2026)
 # =========================================================
 CONFIG = {
-    "project_id":   "tphcm-470513", 
+    "project_id":   "web-gis-key", 
     "admin_l1":     "FAO/GAUL/2015/level1",   
     "admin_l2":     "FAO/GAUL/2015/level2",   
     "scale":        250, 
