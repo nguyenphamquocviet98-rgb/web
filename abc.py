@@ -194,20 +194,22 @@ init_session_state()
 # =========================================================
 def init_gee():
     try:
-        if "GEE_EMAIL" in st.secrets and "GEE_KEY" in st.secrets:
-            # Sửa lại dòng này: Thêm chữ key_data= vào trước st.secrets["GEE_KEY"]
+        if "GEE_KEY" in st.secrets:
+            # Parse chuỗi JSON từ Secrets
+            key_data = json.loads(st.secrets["GEE_KEY"])
+            
+            # Khởi tạo thông tin xác thực
             credentials = ee.ServiceAccountCredentials(
-                st.secrets["GEE_EMAIL"],
-                key_data=st.secrets["GEE_KEY"] 
+                key_data['client_email'],
+                key_data=st.secrets["GEE_KEY"]
             )
             ee.Initialize(credentials, project=CONFIG["project_id"])
         else:
+            # Fallback cho môi trường local đã authenticate
             ee.Initialize(project=CONFIG["project_id"])
     except Exception as e:
         st.error(f"❌ Lỗi khởi tạo GEE: {e}")
         st.stop()
-
-init_gee()
 # 6. GEE CORE FUNCTIONS (ĐƯỢC TỐI ƯU CACHE & TILESCALE)
 # =========================================================
 def is_lst(layer): return layer == "LST"
