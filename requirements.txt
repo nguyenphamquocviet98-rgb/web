@@ -2,7 +2,9 @@ streamlit
 earthengine-api
 folium
 streamlit-folium
-geemap
-python-box
+geemap==0.32.1
+python-box==6.1.0
+setuptools==69.5.1
+ipython==8.12.0
 pandas
 plotly
