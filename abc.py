@@ -195,20 +195,20 @@ init_session_state()
 def init_gee():
     try:
         if "GEE_KEY" in st.secrets:
-            # Parse chuỗi JSON từ Secrets
-            key_data = json.loads(st.secrets["GEE_KEY"])
+            # Ép kiểu JSON để đảm bảo không sai định dạng
+            key_info = json.loads(st.secrets["GEE_KEY"])
             
-            # Khởi tạo thông tin xác thực
             credentials = ee.ServiceAccountCredentials(
-                key_data['client_email'],
+                key_info['client_email'],
                 key_data=st.secrets["GEE_KEY"]
             )
+            # Khởi tạo kèm theo dự án và địa chỉ API chuẩn
             ee.Initialize(credentials, project=CONFIG["project_id"])
         else:
-            # Fallback cho môi trường local đã authenticate
             ee.Initialize(project=CONFIG["project_id"])
     except Exception as e:
-        st.error(f"❌ Lỗi khởi tạo GEE: {e}")
+        # Hiển thị lỗi ra màn hình để biết chính xác lỗi gì (nếu có)
+        st.error(f"❌ Lỗi xác thực GEE: {e}")
         st.stop()
 # 6. GEE CORE FUNCTIONS (ĐƯỢC TỐI ƯU CACHE & TILESCALE)
 # =========================================================
