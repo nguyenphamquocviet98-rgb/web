@@ -4,7 +4,7 @@ folium
 streamlit-folium
 geemap==0.32.1
 python-box==6.1.0
-setuptools
-ipython
+setuptools==69.5.1
 pandas
 plotly
+ipython
