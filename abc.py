@@ -195,9 +195,10 @@ init_session_state()
 def init_gee():
     try:
         if "GEE_EMAIL" in st.secrets and "GEE_KEY" in st.secrets:
+            # Sửa lại dòng này: Thêm chữ key_data= vào trước st.secrets["GEE_KEY"]
             credentials = ee.ServiceAccountCredentials(
                 st.secrets["GEE_EMAIL"],
-                st.secrets["GEE_KEY"]
+                key_data=st.secrets["GEE_KEY"] 
             )
             ee.Initialize(credentials, project=CONFIG["project_id"])
         else:
@@ -206,13 +207,7 @@ def init_gee():
         st.error(f"❌ Lỗi khởi tạo GEE: {e}")
         st.stop()
 
-# 👇👇👇 THÊM ĐÚNG 1 DÒNG NÀY VÀO ĐÂY (SÁT LỀ TRÁI) 👇👇👇
 init_gee()
-
-# =========================================================
-# 6. GEE CORE FUNCTIONS (ĐƯỢC TỐI ƯU CACHE & TILESCALE)
-# =========================================================
-# =========================================================
 # 6. GEE CORE FUNCTIONS (ĐƯỢC TỐI ƯU CACHE & TILESCALE)
 # =========================================================
 def is_lst(layer): return layer == "LST"
